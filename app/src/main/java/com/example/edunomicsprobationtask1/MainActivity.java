@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +20,6 @@ import java.util.Comparator;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<ExampleItem> mExampleList;
-    private Button sortbuttontitle;
-    private Button sortbuttondescription;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sortbuttontitle = findViewById(R.id.button_sort_title);
-        sortbuttondescription = findViewById(R.id.button_sort_description);
+        Button sortbuttontitle = findViewById(R.id.button_sort_title);
+        Button sortbuttondescription = findViewById(R.id.button_sort_description);
+        Button addbutton = findViewById(R.id.button_add_item);
 
         createExampleList();
         buildRecyclerView();
@@ -50,6 +52,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem(0);
+            }
+        });
+
+        EditText editText = findViewById(R.id.search_edit_text);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filterByTitle(s.toString());
+            }
+        });
+
+    }
+
+    private void  addItem(int position){
+        mExampleList.add(position , new ExampleItem(R.drawable.ic_baseline_account_circle_24 , "Title" , "Description Comes Here"));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void deleteItem(int position){
+        mExampleList.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }
+
+    private void filterByTitle(String text){
+        ArrayList<ExampleItem> filteredList = new ArrayList<>();
+        for(ExampleItem item : mExampleList){
+            if(item.getmText1().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+
+        mAdapter.filterlist(filteredList);
     }
 
     public void sortByTitle() {
@@ -80,6 +128,14 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+
+            @Override
+            public void onDeleteClick(int position) {
+                deleteItem(position);
+            }
+        });
 
     }
 

@@ -3,6 +3,7 @@ package com.example.edunomicsprobationtask1;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,15 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
     private ArrayList<ExampleItem> mExampleList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public RecyclerAdapter (ArrayList<ExampleItem> mExampleList){
         this.mExampleList = mExampleList;
@@ -23,7 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_example, parent, false);
-        return new RecyclerViewHolder(v);
+        return new RecyclerViewHolder(v , mListener);
     }
 
     @Override
@@ -46,14 +56,33 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public ImageView mImageView;
         public TextView mTextView1;
         public TextView mTextView2;
+        public ImageView deleteimage;
 
-        public RecyclerViewHolder(@NonNull View itemView) {
+        public RecyclerViewHolder(@NonNull View itemView , final OnItemClickListener listener) {
             super(itemView);
 
             mImageView = itemView.findViewById(R.id.imageView);
             mTextView1 = itemView.findViewById(R.id.textView1);
             mTextView2 = itemView.findViewById(R.id.textView2);
+            deleteimage = itemView.findViewById(R.id.deleteicon);
 
+            deleteimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!= null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onDeleteClick(position);
+                        }
+                    }
+
+                }
+            });
         }
+    }
+
+    public void filterlist(ArrayList<ExampleItem> filteredList){
+        mExampleList = filteredList;
+        notifyDataSetChanged();
     }
 }
