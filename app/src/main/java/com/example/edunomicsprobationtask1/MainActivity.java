@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         sortbuttontitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Title button: " , "pressed");
+                Log.d("Title button: ", "pressed");
                 sortByTitle();
             }
         });
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         sortbuttondescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Description button: " , "pressed");
+                Log.d("Description button: ", "pressed");
                 sortByDetails();
             }
         });
@@ -79,20 +79,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void  addItem(int position){
-        mExampleList.add(position , new ExampleItem(R.drawable.ic_baseline_account_circle_24 , "Title" , "Description Comes Here"));
+    private void addItem(int position) {
+        mExampleList.add(position, new ExampleItem(R.drawable.ic_baseline_account_circle_24, "Title", "Description Comes Here"));
         mAdapter.notifyDataSetChanged();
     }
 
-    private void deleteItem(int position){
+    private void deleteItem(int position) {
         mExampleList.remove(position);
         mAdapter.notifyItemRemoved(position);
     }
 
-    private void filterByTitle(String text){
+    private void filterByTitle(String text) {
         ArrayList<ExampleItem> filteredList = new ArrayList<>();
-        for(ExampleItem item : mExampleList){
-            if(item.getmText1().toLowerCase().contains(text.toLowerCase())){
+        for (ExampleItem item : mExampleList) {
+            if (item.getmText1().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -130,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra("Example Item", mExampleList.get(position));
+                startActivity(intent);
+            }
 
             @Override
             public void onDeleteClick(int position) {

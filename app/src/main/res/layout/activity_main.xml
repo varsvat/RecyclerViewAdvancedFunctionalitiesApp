@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/black"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <EditText
+        android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:hint="Search By Title Here...."
         android:padding="4dp"
         android:textColor="@android:color/white"
-        android:id="@+id/search_edit_text"
-        android:hint="Search By Title Here...."
-        android:textColorHint="#A8FFFFFF"
-        />
+        android:textColorHint="#A8FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -28,6 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
@@ -56,6 +56,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
@@ -69,15 +70,6 @@
             android:text="Add an Item"
             android:textColor="@android:color/black" />
 
-        <Button
-            android:id="@+id/button_deleteitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:background="#515151"
-            android:padding="10dp"
-            android:text="Delete Item"
-            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

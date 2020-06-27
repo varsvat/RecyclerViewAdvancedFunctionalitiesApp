@@ -18,6 +18,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
+        void onItemClick( int position);
         void onDeleteClick(int position);
     }
 
@@ -65,6 +66,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             mTextView1 = itemView.findViewById(R.id.textView1);
             mTextView2 = itemView.findViewById(R.id.textView2);
             deleteimage = itemView.findViewById(R.id.deleteicon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!= null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
             deleteimage.setOnClickListener(new View.OnClickListener() {
                 @Override
