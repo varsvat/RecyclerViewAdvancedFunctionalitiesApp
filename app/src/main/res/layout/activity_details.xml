@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/black">
+
+
+    <ImageView
+    android:id="@+id/imageViewdetails"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
+    android:src="@drawable/ic_launcher_foreground"
+    android:layout_centerHorizontal="true"
+    android:padding="2dp" />
+
+    <TextView
+        android:layout_margin="20dp"
+        android:id="@+id/textView1details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewdetails"
+        android:text="Title"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="19dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1details"
+        android:text="Description Comes Here"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="19dp"
+        android:layout_margin="20dp"
+        android:textStyle="italic" />
+
+</RelativeLayout>
